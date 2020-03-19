@@ -5,8 +5,12 @@
 + run make command for linux: make
 
 
-- executable should be in src/surface_distance_exe:
+- executable should be in build/src/surface_distance_exe:
 + ./surface_distance_exe [begin_pixel_X] [begin_pixel_Y] [end_pixel_X] [end_pixel_Y]
+
+
+- test should be in build/test/test_surface_distance:
++ ./test_surface_distance
 
 
 - Approach to find the surface distance between two points accounting for the topology of the surface.
@@ -18,3 +22,4 @@ in term of latitude, longtitude, and height in unit meter
 
 Drawback:
 + The function does suffer floating point computation when grid is larger than 512x512 (I only tests grid 1512x1512, 4512x4512) 
+
