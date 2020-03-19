@@ -32,7 +32,7 @@ int main(int argv, char** args) {
 	std::vector<unsigned char> postHeight = readHeightData("post.data");
 
 	glm::ivec2 begin{1, 1};
-	glm::ivec2 end{ 512, 4 };
+	glm::ivec2 end{ 512, 512 };
 	float preDistance = calcSurfaceDistance(begin, end, preHeight, IMG_WIDTH, IMG_HEIGHT, PIXEL_DISTANCE, PIXEL_HEIGHT);
 	float postDistance = calcSurfaceDistance(begin, end, postHeight, IMG_WIDTH, IMG_HEIGHT, PIXEL_DISTANCE, PIXEL_HEIGHT);
 

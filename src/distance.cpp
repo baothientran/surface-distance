@@ -171,7 +171,7 @@ float calcSurfaceDistance(glm::ivec2 begin, glm::ivec2 end, const std::vector<un
 		intersectLineAndVoxelBounds(begin, end, voxelBound,
 			[&](glm::ivec2 from, glm::ivec2 to, float tline, float tray) {
 				int indFrom = sub2ind(imageWidth, from.x, from.y);
-				int indTo = sub2ind(imageHeight, to.x, to.y);
+				int indTo = sub2ind(imageWidth, to.x, to.y);
 				float heightFrom = heightdata[indFrom] * pixelHeight;
 				float heightTo = heightdata[indTo] * pixelHeight;
 
@@ -183,7 +183,7 @@ float calcSurfaceDistance(glm::ivec2 begin, glm::ivec2 end, const std::vector<un
 			[&](glm::ivec2 from, glm::ivec2 to, float tline0, float tline1) {
 				colinear = true;
 				int indFrom = sub2ind(imageWidth, from.x, from.y);
-				int indTo = sub2ind(imageHeight, to.x, to.y);
+				int indTo = sub2ind(imageWidth, to.x, to.y);
 				float heightFrom = heightdata[indFrom] * pixelHeight;
 				float heightTo = heightdata[indTo] * pixelHeight;
 
