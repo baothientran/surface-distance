@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <iterator>
+#include <string>
 #include "distance.h"
 
 
@@ -27,18 +28,56 @@ std::vector<unsigned char> readHeightData(const std::string &filename) {
 }
 
 
+void displayUsage() {
+	std::cout << "Usage: [begin_pixel_X] [begin_pixel_Y] [end_pixel_X] [end_pixel_Y]" << "\n";
+	std::cout << "begin_pixel_X: x component of the begin pixel. x >= 0 && x < 511\n";
+	std::cout << "begin_pixel_Y: y component of the begin pixel. y >= 0 && y < 511\n";
+	std::cout << "end_pixel_X: x component of the end pixel. x >= 0 && x < 511\n";
+	std::cout << "end_pixel_Y: y component of the end pixel. y >= 0 && y < 511\n";
+}
+
+
+bool isCMDArgsInvalid(int component) {
+	return component < 0 || component >= IMG_WIDTH;
+}
+
+
 int main(int argv, char** args) {
+	if (argv != 5) {
+		displayUsage();
+		return 0;
+	}
+
+	int beginX;
+	int beginY;
+	int endX;
+	int endY;
+	try {
+		beginX = std::stoi(args[1]);
+		beginY = std::stoi(args[2]);
+		endX   = std::stoi(args[3]);
+		endY   = std::stoi(args[4]);
+		if (isCMDArgsInvalid(beginX) || isCMDArgsInvalid(beginY) || isCMDArgsInvalid(endX) || isCMDArgsInvalid(endY)) {
+			displayUsage();
+			return 0;
+		}
+	}
+	catch (const std::exception &e) {
+		displayUsage();
+		return 0;
+	}
+
 	std::vector<unsigned char> preHeight = readHeightData("pre.data");
 	std::vector<unsigned char> postHeight = readHeightData("post.data");
 
-	glm::ivec2 begin{1, 1};
-	glm::ivec2 end{ 512, 512 };
+	glm::ivec2 begin{beginX, beginY};
+	glm::ivec2 end{ endX, endY };
 	float preDistance = calcSurfaceDistance(begin, end, preHeight, IMG_WIDTH, IMG_HEIGHT, PIXEL_DISTANCE, PIXEL_HEIGHT);
 	float postDistance = calcSurfaceDistance(begin, end, postHeight, IMG_WIDTH, IMG_HEIGHT, PIXEL_DISTANCE, PIXEL_HEIGHT);
 
 	std::cout << "Pre Distance: " << preDistance << "\n";
 	std::cout << "Post Distance: " << postDistance << "\n";
-	std::cout << "Straight Distance: " << glm::length(static_cast<glm::vec2>(end - begin)* PIXEL_DISTANCE) << "\n";
+	std::cout << "difference: " << postDistance - preDistance << "\n";
 
 	return 0;
 }
